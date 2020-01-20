@@ -1,6 +1,7 @@
 import React from 'react'
 import { SiteAdminRepositoriesOverviewCard } from '../repositories/SiteAdminRepositoriesOverviewCard'
 import { SiteAdminUsersOverviewCard } from '../users/SiteAdminUsersOverviewCard'
+import { SiteAdminUsageStatisticsOverviewCard } from '../usageStatistics/SiteAdminUsageStatisticsOverviewCard'
 
 export interface SiteAdminOverviewComponent {
     component: React.ComponentType
@@ -14,4 +15,5 @@ export interface SiteAdminOverviewComponent {
 export const siteAdminOverviewComponents: readonly SiteAdminOverviewComponent[] = [
     { component: SiteAdminRepositoriesOverviewCard },
     { component: SiteAdminUsersOverviewCard },
+    { component: SiteAdminUsageStatisticsOverviewCard },
 ]

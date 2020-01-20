@@ -8,12 +8,10 @@ import { numberWithCommas, pluralize } from '../../../../shared/src/util/strings
 import { queryGraphQL } from '../../backend/graphql'
 import { useObservable } from '../../util/useObservable'
 import WarningIcon from 'mdi-react/WarningIcon'
-import CloudCheckIcon from 'mdi-react/CloudCheckIcon'
-import CheckIcon from 'mdi-react/CheckIcon'
 
 const queryTotalCounts = (): Observable<{ users: number; organizations: number; accessTokens: number }> =>
     queryGraphQL(gql`
-        query Overview {
+        query {
             users {
                 totalCount
             }
@@ -47,7 +45,7 @@ export const SiteAdminUsersOverviewCard: React.FunctionComponent = () => {
         <>
             <h3 className="card-header">
                 <Link to="/site-admin/users" className="text-body">
-                    {numberWithCommas(counts.users)} {pluralize('repository', counts.users, 'users')}
+                    {numberWithCommas(counts.users)} {pluralize('user', counts.users)}
                 </Link>
             </h3>
             <ul className="list-group list-group-flush">
@@ -60,7 +58,7 @@ export const SiteAdminUsersOverviewCard: React.FunctionComponent = () => {
                 <li className="list-group-item d-flex justify-content-between align-items-center">
                     Access tokens <span className="font-weight-bold">{counts.accessTokens}</span>
                 </li>
-                <li className="list-group-item" style={{ borderBottomWidth: '2px' }}>
+                <li className="list-group-item">
                     <div className="d-flex justify-content-between align-items-center">
                         Authentication providers <span className="font-weight-bold">2</span>
                     </div>
