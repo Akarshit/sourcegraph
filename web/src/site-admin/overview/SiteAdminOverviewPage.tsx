@@ -1,4 +1,5 @@
 import { LoadingSpinner } from '@sourcegraph/react-loading-spinner'
+import classNames from 'classnames'
 import H from 'history'
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon'
 import React, { useEffect, useMemo } from 'react'
@@ -18,10 +19,11 @@ import { UsageChart } from '../SiteAdminUsageStatisticsPage'
 import { ErrorAlert } from '../../components/alerts'
 import { useObservable } from '../../util/useObservable'
 import { ErrorLike, asError, isErrorLike } from '../../../../shared/src/util/errors'
+import { siteAdminOverviewComponents } from './overviewComponents'
 
 interface Props extends ActivationProps {
     history: H.History
-    overviewComponents: readonly React.ComponentType[]
+    overviewComponents: typeof siteAdminOverviewComponents
     isLightTheme: boolean
 }
 
@@ -102,16 +104,26 @@ export const SiteAdminOverviewPage: React.FunctionComponent<Props> = props => {
     return (
         <div className="site-admin-overview-page">
             <PageTitle title="Overview - Admin" />
-            {props.overviewComponents.length > 0 && (
-                <div className="mb-4">
-                    {props.overviewComponents.map((C, i) => (
-                        <C key={i} />
-                    ))}
-                </div>
-            )}
+            <div className="site-admin-overview-page__grid">
+                {props.overviewComponents.map(({ component: C, noCardClass, fullWidth }, i) => (
+                    <div
+                        className={classNames('site-admin-overview-page__grid-cell', {
+                            'site-admin-overview-page__grid-cell--full-width': fullWidth,
+                        })}
+                        // This array index is statically defined, so it is stable.
+                        //
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={i}
+                    >
+                        <div className={noCardClass ? '' : 'card'}>
+                            <C />
+                        </div>
+                    </div>
+                ))}
+            </div>
             {info === undefined && <LoadingSpinner className="icon-inline" />}
             <div className="list-group">
-                {info && !isErrorLike(info) && (
+                {info && !isErrorLike(info) && false && (
                     <>
                         {props.activation && props.activation.completed && (
                             <Collapsible
