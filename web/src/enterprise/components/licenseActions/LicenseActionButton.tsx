@@ -9,7 +9,7 @@ interface Props {}
  */
 const LicenseActionButton: React.FunctionComponent<Props> = () => (
     <a
-        href="https://docs.sourcegraph.com"
+        href="/subscriptions/new-trial"
         /* TODO!(sqs) */ target="_blank"
         rel="noopener noreferrer"
         className="btn btn-sm btn-secondary"
